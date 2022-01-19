@@ -1,0 +1,31 @@
+<idea-plugin>
+    <id>co.anbora.labs.pdn-viewer</id>
+    <name>PDN Viewer</name>
+    <vendor email="anboralabs@gmail.com" url="https://labs.anbora.co">Anbora-labs</vendor>
+
+    <description><![CDATA[
+    Allow open pdn files, files created with Paint dot net.
+    ]]></description>
+
+    <!-- please see https://plugins.jetbrains.com/docs/intellij/plugin-compatibility.html
+         on how to target different products -->
+    <depends>com.intellij.modules.platform</depends>
+
+    <extensions defaultExtensionNs="com.intellij">
+        <fileEditorProvider implementation="org.intellij.images.editor.impl.ImageFileEditorProvider"/>
+        <selectInTarget implementation="org.intellij.images.thumbnail.impl.ThumbnailSelectInTarget"/>
+
+        <applicationService serviceInterface="co.anbora.labs.pdn.fileTypes.ImageFileTypeManager"
+                            serviceImplementation="org.intellij.images.fileTypes.impl.ImageFileTypeManagerImpl"/>
+        <projectService serviceInterface="co.anbora.labs.pdn.thumbnail.ThumbnailManager"
+                        serviceImplementation="org.intellij.images.thumbnail.impl.ThumbnailManagerImpl"/>
+
+        <fileType name="Image" implementationClass="co.anbora.labs.pdn.fileTypes.impl.ImageFileType" fieldName="INSTANCE" extensions="bigtiff;bmp;dcx;gif;icns;ico;jbig2;jpeg;jpg;pam;pbm;pcx;pgm;png;pnm;ppm;psd;rgbe;tga;tif;tiff;wbmp;xbm;xpm" />
+        <fileLookupInfoProvider implementation="co.anbora.labs.pdn.completion.ImageLookupInfoProvider"/>
+        <documentationProvider implementation="co.anbora.labs.pdn.fileTypes.ImageDocumentationProvider"/>
+    </extensions>
+
+    <actions>
+        <!-- Add your actions here -->
+    </actions>
+</idea-plugin>

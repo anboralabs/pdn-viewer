@@ -11,7 +11,6 @@ import com.intellij.util.gist.VirtualFileGist;
 import com.intellij.util.io.DataExternalizer;
 import com.intellij.util.io.DataInputOutputUtil;
 import co.anbora.labs.pdn.fileTypes.ImageFileTypeManager;
-import co.anbora.labs.pdn.fileTypes.impl.SvgFileType;
 import co.anbora.labs.pdn.util.ImageInfo;
 import co.anbora.labs.pdn.util.ImageInfoReader;
 import org.jetbrains.annotations.NotNull;
@@ -52,7 +51,7 @@ public final class ImageInfoIndex {
       }
 
       FileType fileType = file.getFileType();
-      if (fileType != SvgFileType.INSTANCE && fileType != ImageFileTypeManager.getInstance().getImageFileType()) {
+      if (fileType != ImageFileTypeManager.getInstance().getImageFileType()) {
         return null;
       }
 

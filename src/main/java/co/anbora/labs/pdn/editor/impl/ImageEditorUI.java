@@ -392,15 +392,6 @@ final class ImageEditorUI extends JPanel implements DataProvider, CopyProvider, 
       if (editor == null) return Double.MAX_VALUE;
       VirtualFile file = editor.getFile();
 
-      if (IfsUtil.isSVG(file)) {
-        try {
-          return Math.max(1, SVGLoader.getMaxZoomFactor(file.getPath(), new ByteArrayInputStream(file.contentsToByteArray()),
-                                                        ScaleContext.create(editor.getComponent())));
-        }
-        catch (Throwable t) {
-          Logger.getInstance(ImageEditorUI.class).warn(t);
-        }
-      }
       return Double.MAX_VALUE;
     });
     private double zoomFactor = 0.0d;

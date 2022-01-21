@@ -19,8 +19,10 @@ import org.apache.commons.imaging.common.bytesource.ByteSourceArray;
 import org.apache.commons.imaging.formats.ico.IcoImageParser;
 import co.anbora.labs.pdn.editor.ImageDocument;
 import co.anbora.labs.pdn.editor.ImageDocument.ScaledImageProvider;
+import org.apache.pdfbox.pdmodel.interactive.documentnavigation.destination.PDNamedDestination;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import org.trypticon.pdn.Pdn;
 
 import javax.imageio.ImageIO;
 import javax.imageio.ImageReadParam;
@@ -70,78 +72,14 @@ public final class IfsUtil {
         final byte[] content = file.contentsToByteArray();
         file.putUserData(IMAGE_PROVIDER_REF_KEY, null);
 
-        if (ICO_FORMAT.equalsIgnoreCase(file.getExtension())) {
-          try {
-            final BufferedImage image = ICO_IMAGE_PARSER.getBufferedImage(new ByteSourceArray(content), null);
-            file.putUserData(FORMAT_KEY, ICO_FORMAT);
-            file.putUserData(IMAGE_PROVIDER_REF_KEY, new SoftReference<>((scale, ancestor) -> image));
-            return true;
-          }
-          catch (ImageReadException ignore) { }
-        }
-
-        if (isSVG(file)) {
-          final Ref<URL> url = Ref.create();
-          try {
-            url.set(new File(file.getPath()).toURI().toURL());
-          }
-          catch (MalformedURLException ex) {
-            LOG.warn(ex.getMessage());
-          }
-
-          try {
-            // ensure svg can be displayed
-            SVGLoader.load(url.get(), new ByteArrayInputStream(content), 1.0f);
-          }
-          catch (Throwable t) {
-            LOG.warn(url.get() + " " + t.getMessage());
-            return false;
-          }
-
-          file.putUserData(FORMAT_KEY, SVG_FORMAT);
-          file.putUserData(IMAGE_PROVIDER_REF_KEY, new SoftReference<>(new ImageDocument.CachedScaledImageProvider() {
-            final ScaleContext.Cache<BufferedImage> cache = new ScaleContext.Cache<>((ctx) -> {
-              try {
-                return SVGLoader.loadHiDPI(url.get(), new ByteArrayInputStream(content), ctx);
-              }
-              catch (Throwable t) {
-                LOG.warn(url.get() + " " + t.getMessage());
-                return null;
-              }
-            });
-            @Override
-            public void clearCache() {
-              cache.clear();
-            }
-            @Override
-            public BufferedImage apply(Double zoom, Component ancestor) {
-              ScaleContext ctx = ScaleContext.create(ancestor);
-              ctx.setScale(OBJ_SCALE.of(zoom));
-              return cache.getOrProvide(ctx);
-            }
-          }));
-          return true;
-        }
-
         InputStream inputStream = new ByteArrayInputStream(content, 0, content.length);
-        try (ImageInputStream imageInputStream = ImageIO.createImageInputStream(inputStream)) {
-          Iterator<ImageReader> imageReaders = ImageIO.getImageReaders(imageInputStream);
-          if (imageReaders.hasNext()) {
-            ImageReader imageReader = imageReaders.next();
-            try {
-              file.putUserData(FORMAT_KEY, imageReader.getFormatName());
-              ImageReadParam param = imageReader.getDefaultReadParam();
-              imageReader.setInput(imageInputStream, true, true);
-              int minIndex = imageReader.getMinIndex();
-              BufferedImage image = imageReader.read(minIndex, param);
-              file.putUserData(IMAGE_PROVIDER_REF_KEY, new SoftReference<>((zoom, ancestor) -> image));
-              return true;
-            }
-            finally {
-              imageReader.dispose();
-            }
-          }
-        }
+        Pdn pdnImage = Pdn.readFrom(inputStream);
+
+        file.putUserData(FORMAT_KEY, "PDN");
+        BufferedImage image = pdnImage.getDocument().toBufferedImage();
+        file.putUserData(IMAGE_PROVIDER_REF_KEY, new SoftReference<>((zoom, ancestor) -> image));
+        return true;
+
       } finally {
         // We perform loading no more needed
         file.putUserData(TIME_MODIFICATION_STAMP_KEY, actualTimeModificationStamp);
@@ -167,10 +105,6 @@ public final class IfsUtil {
     refresh(file);
     SoftReference<ScaledImageProvider> imageProviderRef = file.getUserData(IMAGE_PROVIDER_REF_KEY);
     return SoftReference.dereference(imageProviderRef);
-  }
-
-  public static boolean isSVG(@Nullable VirtualFile file) {
-    return file != null && SVG_FORMAT.equalsIgnoreCase(file.getExtension());
   }
 
   @Nullable

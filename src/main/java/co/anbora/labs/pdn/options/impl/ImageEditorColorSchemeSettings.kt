@@ -33,7 +33,7 @@ class ImageEditorColorSchemeSettings : ColorSettingsPage, DisplayPrioritySortabl
 
   override fun getPriority() = DisplayPriority.OTHER_SETTINGS
   override fun getDisplayName() = ImagesBundle.message("settings.page.name")
-  override fun getIcon() = ImageFileType.INSTANCE.icon
+  override fun getIcon() = ImageFileType.icon
   override fun getDemoText() = " "
   override fun getHighlighter() = PlainSyntaxHighlighter()
   override fun getAdditionalHighlightingTagToDescriptorMap(): Map<String, TextAttributesKey>? = null

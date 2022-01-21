@@ -17,10 +17,12 @@
 
         <applicationService serviceInterface="co.anbora.labs.pdn.fileTypes.ImageFileTypeManager"
                             serviceImplementation="co.anbora.labs.pdn.fileTypes.impl.ImageFileTypeManagerImpl"/>
+        <applicationService serviceInterface="co.anbora.labs.pdn.options.OptionsManager"
+                            serviceImplementation="co.anbora.labs.pdn.options.impl.OptionsManagerImpl"/>
         <projectService serviceInterface="co.anbora.labs.pdn.thumbnail.ThumbnailManager"
                         serviceImplementation="co.anbora.labs.pdn.thumbnail.impl.ThumbnailManagerImpl"/>
 
-        <fileType name="Image" implementationClass="co.anbora.labs.pdn.fileTypes.impl.ImageFileType" fieldName="INSTANCE" extensions="bigtiff;bmp;dcx;gif;icns;ico;jbig2;jpeg;jpg;pam;pbm;pcx;pgm;png;pnm;ppm;psd;rgbe;tga;tif;tiff;wbmp;xbm;xpm" />
+        <fileType name="Paint DotNet Image" implementationClass="co.anbora.labs.pdn.fileTypes.impl.ImageFileType" fieldName="INSTANCE" extensions="pdn" />
         <fileLookupInfoProvider implementation="co.anbora.labs.pdn.completion.ImageLookupInfoProvider"/>
         <documentationProvider implementation="co.anbora.labs.pdn.fileTypes.ImageDocumentationProvider"/>
     </extensions>

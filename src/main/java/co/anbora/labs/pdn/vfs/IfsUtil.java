@@ -1,6 +1,7 @@
 // Copyright 2000-2019 JetBrains s.r.o. Use of this source code is governed by the Apache 2.0 license that can be found in the LICENSE file.
 package co.anbora.labs.pdn.vfs;
 
+import co.anbora.labs.pdn.editor.ImageDocument.ScaledImageProvider;
 import com.intellij.openapi.diagnostic.Logger;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.roots.ProjectFileIndex;
@@ -8,37 +9,19 @@ import com.intellij.openapi.roots.ProjectRootManager;
 import com.intellij.openapi.util.Key;
 import com.intellij.openapi.util.NlsSafe;
 import com.intellij.openapi.util.Pair;
-import com.intellij.openapi.util.Ref;
 import com.intellij.openapi.vfs.VfsUtilCore;
 import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.reference.SoftReference;
-import com.intellij.ui.scale.ScaleContext;
-import com.intellij.util.SVGLoader;
-import org.apache.commons.imaging.ImageReadException;
-import org.apache.commons.imaging.common.bytesource.ByteSourceArray;
 import org.apache.commons.imaging.formats.ico.IcoImageParser;
-import co.anbora.labs.pdn.editor.ImageDocument;
-import co.anbora.labs.pdn.editor.ImageDocument.ScaledImageProvider;
-import org.apache.pdfbox.pdmodel.interactive.documentnavigation.destination.PDNamedDestination;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.trypticon.pdn.Pdn;
 
-import javax.imageio.ImageIO;
-import javax.imageio.ImageReadParam;
-import javax.imageio.ImageReader;
-import javax.imageio.stream.ImageInputStream;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.util.Iterator;
-
-import static com.intellij.ui.scale.ScaleType.OBJ_SCALE;
 
 /**
  * Image loader utility.
@@ -46,15 +29,10 @@ import static com.intellij.ui.scale.ScaleType.OBJ_SCALE;
  * @author <a href="mailto:aefimov.box@gmail.com">Alexey Efimov</a>
  */
 public final class IfsUtil {
-  private static final Logger LOG = Logger.getInstance(IfsUtil.class);
-
-  public static final String ICO_FORMAT = "ico";
-  public static final String SVG_FORMAT = "svg";
 
   private static final Key<Pair<Long, Long>> TIME_MODIFICATION_STAMP_KEY = Key.create("Image.timeModificationStamp");
   private static final Key<String> FORMAT_KEY = Key.create("Image.format");
   private static final Key<SoftReference<ScaledImageProvider>> IMAGE_PROVIDER_REF_KEY = Key.create("Image.bufferedImageProvider");
-  private static final IcoImageParser ICO_IMAGE_PARSER = new IcoImageParser();
 
   /**
    * Load image data for file and put user data attributes into file.

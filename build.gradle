@@ -35,9 +35,8 @@ publishPlugin {
 }
 
 patchPluginXml {
-    changeNotes = """
-      Add change notes here.<br>
-      <em>most HTML tags may be used</em>"""
+    changeNotes = file("src/main/html/change-notes.html").getText().toString()
+    pluginDescription = file("src/main/html/description.html").getText().toString()
     sinceBuild = '203'
 }
 

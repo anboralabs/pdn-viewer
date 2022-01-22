@@ -15,11 +15,18 @@
  */
 package co.anbora.labs.pdn.editor.impl;
 
+import co.anbora.labs.pdn.ImagesBundle;
 import co.anbora.labs.pdn.editor.ImageDocument;
 import co.anbora.labs.pdn.editor.ImageEditor;
 import co.anbora.labs.pdn.editor.ImageZoomModel;
 import co.anbora.labs.pdn.editor.actionSystem.ImageEditorActions;
 import co.anbora.labs.pdn.options.*;
+import co.anbora.labs.pdn.thumbnail.actionSystem.ThumbnailViewActions;
+import co.anbora.labs.pdn.thumbnail.actions.ShowBorderAction;
+import co.anbora.labs.pdn.ui.ImageComponent;
+import co.anbora.labs.pdn.ui.ImageComponentDecorator;
+import co.anbora.labs.ui.PopupHandler;
+import co.anbora.labs.util.LazyInitializer;
 import com.intellij.ide.CopyPasteDelegator;
 import com.intellij.ide.CopyPasteSupport;
 import com.intellij.ide.CopyProvider;
@@ -27,7 +34,6 @@ import com.intellij.ide.DeleteProvider;
 import com.intellij.ide.util.DeleteHandler;
 import com.intellij.openapi.Disposable;
 import com.intellij.openapi.actionSystem.*;
-import com.intellij.openapi.diagnostic.Logger;
 import com.intellij.openapi.ide.CopyPasteManager;
 import com.intellij.openapi.ui.Messages;
 import com.intellij.openapi.util.text.StringUtil;
@@ -36,20 +42,10 @@ import com.intellij.openapi.wm.IdeFocusManager;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiFile;
 import com.intellij.psi.PsiManager;
-import com.intellij.ui.PopupHandler;
 import com.intellij.ui.ScrollPaneFactory;
 import com.intellij.ui.components.JBLayeredPane;
 import com.intellij.ui.components.Magnificator;
-import com.intellij.ui.scale.ScaleContext;
-import com.intellij.util.LazyInitializer;
-import com.intellij.util.SVGLoader;
 import com.intellij.util.ui.JBUI;
-import co.anbora.labs.pdn.ImagesBundle;
-import co.anbora.labs.pdn.thumbnail.actionSystem.ThumbnailViewActions;
-import co.anbora.labs.pdn.thumbnail.actions.ShowBorderAction;
-import co.anbora.labs.pdn.ui.ImageComponent;
-import co.anbora.labs.pdn.ui.ImageComponentDecorator;
-import co.anbora.labs.pdn.vfs.IfsUtil;
 import org.jetbrains.annotations.NonNls;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -66,7 +62,6 @@ import java.awt.image.BufferedImage;
 import java.awt.image.ColorModel;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import java.io.ByteArrayInputStream;
 
 /**
  * Image editor UI

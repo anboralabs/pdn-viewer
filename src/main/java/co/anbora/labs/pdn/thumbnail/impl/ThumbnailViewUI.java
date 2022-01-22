@@ -57,8 +57,6 @@ import java.beans.PropertyChangeListener;
 import java.util.List;
 import java.util.*;
 
-import static com.intellij.pom.Navigatable.EMPTY_NAVIGATABLE_ARRAY;
-
 final class ThumbnailViewUI extends JPanel implements DataProvider, Disposable {
 
     private final ThumbnailView thumbnailView;
@@ -79,6 +77,8 @@ final class ThumbnailViewUI extends JPanel implements DataProvider, Disposable {
     };
     private DefaultListModel<String> listModel;
     private Splitter previewSplitter;
+
+    public static Navigatable[] EMPTY_NAVIGATABLE_ARRAY = new Navigatable[0];
 
     ThumbnailViewUI(ThumbnailViewImpl thumbnailView) {
         super(new BorderLayout());

@@ -1,8 +1,6 @@
 // Copyright 2000-2020 JetBrains s.r.o. Use of this source code is governed by the Apache 2.0 license that can be found in the LICENSE file.
 package co.anbora.labs.pdn.util;
 
-import com.intellij.util.ImageLoader;
-import com.intellij.util.SVGLoader;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -19,37 +17,7 @@ import java.util.Objects;
 public final class ImageInfoReader {
   @Nullable
   public static Info getInfo(byte @NotNull [] data) {
-    Info info = getSvgInfo(data);
-    if (info != null) return info;
-
     return read(new ByteArrayInputStream(data));
-  }
-
-  @Nullable
-  private static Info getSvgInfo(byte @NotNull [] data) {
-    for (int i = 0; i < Math.min(data.length, 100); i++) {
-      byte b = data[i];
-      if (b == '<') {
-        Info info = getSvgSize(data);
-        if (info != null) {
-          return info;
-        }
-      }
-      if (!Character.isWhitespace(b)) {
-        break;
-      }
-    }
-    return null;
-  }
-
-  private static Info getSvgSize(byte[] data) {
-    try {
-      ImageLoader.Dimension2DDouble size = SVGLoader.getDocumentSize(new ByteArrayInputStream(data), 1.0f);
-      return new Info((int)Math.round(size.getWidth()), (int)Math.round(size.getHeight()), 32, true);
-    }
-    catch (Throwable e) {
-      return null;
-    }
   }
 
   @Nullable

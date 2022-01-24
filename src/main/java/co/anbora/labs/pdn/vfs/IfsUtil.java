@@ -2,7 +2,6 @@
 package co.anbora.labs.pdn.vfs;
 
 import co.anbora.labs.pdn.editor.ImageDocument.ScaledImageProvider;
-import com.intellij.openapi.diagnostic.Logger;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.roots.ProjectFileIndex;
 import com.intellij.openapi.roots.ProjectRootManager;
@@ -12,7 +11,6 @@ import com.intellij.openapi.util.Pair;
 import com.intellij.openapi.vfs.VfsUtilCore;
 import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.reference.SoftReference;
-import org.apache.commons.imaging.formats.ico.IcoImageParser;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.trypticon.pdn.Pdn;

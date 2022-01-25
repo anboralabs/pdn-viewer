@@ -24,7 +24,7 @@ import org.jetbrains.annotations.NonNls;
  */
 public interface ImageEditorActions {
     @NonNls
-    String GROUP_TOOLBAR = "Images.EditorToolbar";
+    String GROUP_TOOLBAR = "PDN.Images.EditorToolbar";
     @NonNls
     String GROUP_POPUP = "Images.EditorPopupMenu";
     @NonNls

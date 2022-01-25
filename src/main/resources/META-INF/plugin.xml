@@ -28,6 +28,44 @@
     </extensions>
 
     <actions>
-        <!-- Add your actions here -->
+        <group id="PDN.Images.ImageViewActions">
+            <action class="co.anbora.labs.pdn.actions.ToggleTransparencyChessboardAction"
+                    id="PDN.Images.ToggleTransparencyChessboard"
+                    icon="co.anbora.labs.pdn.icons.ImagesIcons.ToggleTransparencyChessboard">
+            </action>
+            <action class="co.anbora.labs.pdn.editor.actions.ToggleGridAction"
+                    id="PDN.Images.Editor.ToggleGrid"
+                    icon="AllIcons.Graph.Grid">
+                <keyboard-shortcut first-keystroke="control QUOTE" keymap="$default"/>
+            </action>
+            <action class="co.anbora.labs.pdn.editor.actions.ZoomInAction"
+                    id="PDN.Images.Editor.ZoomIn"
+                    icon="AllIcons.Graph.ZoomIn"
+                    use-shortcut-of="ExpandAll"/>
+            <action class="co.anbora.labs.pdn.editor.actions.ZoomOutAction"
+                    id="PDN.Images.Editor.ZoomOut"
+                    icon="AllIcons.Graph.ZoomOut"
+                    use-shortcut-of="CollapseAll"/>
+            <action class="co.anbora.labs.pdn.editor.actions.ActualSizeAction"
+                    id="PDN.Images.Editor.ActualSize"
+                    icon="AllIcons.Graph.ActualZoom">
+                <keyboard-shortcut first-keystroke="control DIVIDE" keymap="$default"/>
+                <keyboard-shortcut first-keystroke="control SLASH" keymap="$default"/>
+            </action>
+            <action class="co.anbora.labs.pdn.editor.actions.FitZoomToWindowAction"
+                    id="PDN.Images.Editor.FitZoomToWindow"
+                    icon="AllIcons.General.FitContent"/>
+        </group>
+
+        <group id="PDN.Images.EditorToolbar">
+            <reference id="PDN.Images.ToggleTransparencyChessboard"/>
+            <reference id="PDN.Images.Editor.ToggleGrid"/>
+            <separator/>
+            <reference id="PDN.Images.Editor.ZoomIn"/>
+            <reference id="PDN.Images.Editor.ZoomOut"/>
+            <reference id="PDN.Images.Editor.ActualSize"/>
+            <reference id="PDN.Images.Editor.FitZoomToWindow"/>
+            <reference id="ShowColorPicker"/>
+        </group>
     </actions>
 </idea-plugin>

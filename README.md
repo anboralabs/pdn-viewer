@@ -2,8 +2,9 @@
 
 # PDN Viewer
 
-![Locked-ks](/images/key_store_explorer_1.png)
-![Unlocked-ks](/images/key_store_explorer_2.png)
+![project](/images/pdn_1.png)
+![preview](/images/pdn_2.png)
+![project_with_preview](/images/pdn_3.png)
 
 ## What is it?
 
@@ -28,7 +29,7 @@ git clone https://github.com/anboralabs/pdn-viewer
 
 ```
 - Go to https://github.com/anboralabs/pdn-viewer/releases/tag/v1.0
-- download kse-1.0.jar
+- download pdn-viewer-1.0.jar
 - Plugins -> Install From disk -> choose the file downloaded
 ```
 

@@ -3,7 +3,7 @@
 # PDN Viewer
 
 ![project](/images/pdn_1.png)
-![preview](/images/pdn_2.png)
+![project](/images/pdn_2.png)
 ![project_with_preview](/images/pdn_3.png)
 
 ## What is it?

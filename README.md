@@ -37,11 +37,7 @@ git clone https://github.com/anboralabs/pdn-viewer
 
 - Plugin url
 
-  [Plugin Download](https://plugins.jetbrains.com/plugin/18286-ks-explorer)
-
-## Credits
-
-<div>Icons and were borrowed from <a href="https://keystore-explorer.org" title="keystore-explorer">Keystore-Explorer</a> </div>
+  [Plugin Download](https://plugins.jetbrains.com/plugin/18459-pdn-viewer)
 
 ## License
 

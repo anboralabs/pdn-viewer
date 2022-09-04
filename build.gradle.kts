@@ -1,11 +1,11 @@
 plugins {
     id("java")
     kotlin("jvm") version "1.6.21"
-    id("org.jetbrains.intellij") version "1.8.0"
+    id("org.jetbrains.intellij") version "1.9.0"
 }
 
 group = "co.anbora.labs"
-version = "1.3.1"
+version = "1.3.2"
 
 repositories {
     mavenCentral()
@@ -43,7 +43,7 @@ tasks {
 
     patchPluginXml {
         sinceBuild.set("203")
-        untilBuild.set("222.*")
+        untilBuild.set("223.*")
         changeNotes.set(file("src/main/html/change-notes.html").inputStream().readBytes().toString(Charsets.UTF_8))
         pluginDescription.set(file("src/main/html/description.html").inputStream().readBytes().toString(Charsets.UTF_8))
     }

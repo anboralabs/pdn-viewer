@@ -18,19 +18,18 @@ package co.anbora.labs.pdn.editor.impl;
 import co.anbora.labs.pdn.editor.ImageDocument;
 import co.anbora.labs.pdn.editor.ImageEditor;
 import co.anbora.labs.pdn.editor.ImageZoomModel;
+import co.anbora.labs.pdn.fileTypes.ImageFileTypeManager;
+import co.anbora.labs.pdn.thumbnail.actionSystem.ThumbnailViewActions;
+import co.anbora.labs.pdn.vfs.IfsUtil;
 import com.intellij.openapi.application.ModalityState;
 import com.intellij.openapi.fileEditor.FileEditorManager;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.util.Disposer;
 import com.intellij.openapi.vfs.*;
 import com.intellij.openapi.vfs.newvfs.RefreshQueue;
-import co.anbora.labs.pdn.fileTypes.ImageFileTypeManager;
-import co.anbora.labs.pdn.thumbnail.actionSystem.ThumbnailViewActions;
-import co.anbora.labs.pdn.vfs.IfsUtil;
-import org.jetbrains.annotations.NotNull;
-
-import javax.swing.*;
 import java.awt.*;
+import javax.swing.*;
+import org.jetbrains.annotations.NotNull;
 
 /**
  * Image viewer implementation.
@@ -48,36 +47,40 @@ public final class ImageEditorImpl implements ImageEditor {
   }
 
   /**
-   * @param isEmbedded if it's true the toolbar and the image info are disabled and an image is left-side aligned
+   * @param isEmbedded if it's true the toolbar and the image info are disabled
+   *     and an image is left-side aligned
    * @param isOpaque if it's false, all components of the editor are transparent
    */
-  public ImageEditorImpl(@NotNull Project project, @NotNull VirtualFile file, boolean isEmbedded, boolean isOpaque) {
+  public ImageEditorImpl(@NotNull Project project, @NotNull VirtualFile file,
+                         boolean isEmbedded, boolean isOpaque) {
     this.project = project;
     this.file = file;
 
     editorUI = new ImageEditorUI(this, isEmbedded, isOpaque);
     Disposer.register(this, editorUI);
 
-    VirtualFileManager.getInstance().addVirtualFileListener(new VirtualFileListener() {
-      @Override
-      public void propertyChanged(@NotNull VirtualFilePropertyEvent event) {
-        ImageEditorImpl.this.propertyChanged(event);
-      }
+    VirtualFileManager.getInstance().addVirtualFileListener(
+        new VirtualFileListener() {
+          @Override
+          public void propertyChanged(@NotNull VirtualFilePropertyEvent event) {
+            ImageEditorImpl.this.propertyChanged(event);
+          }
 
-      @Override
-      public void contentsChanged(@NotNull VirtualFileEvent event) {
-        ImageEditorImpl.this.contentsChanged(event);
-      }
-    }, this);
+          @Override
+          public void contentsChanged(@NotNull VirtualFileEvent event) {
+            ImageEditorImpl.this.contentsChanged(event);
+          }
+        },
+        this);
 
     setValue(file);
   }
 
   void setValue(VirtualFile file) {
     try {
-      editorUI.setImageProvider(IfsUtil.getImageProvider(file), IfsUtil.getFormat(file));
-    }
-    catch (Exception e) {
+      editorUI.setImageProvider(IfsUtil.getImageProvider(file),
+                                IfsUtil.getFormat(file));
+    } catch (Exception e) {
       //     Error loading image file
       editorUI.setImageProvider(null, null);
     }
@@ -175,11 +178,11 @@ public final class ImageEditorImpl implements ImageEditor {
       file.refresh(true, false, () -> {
         if (ImageFileTypeManager.getInstance().isImage(file)) {
           setValue(file);
-        }
-        else {
+        } else {
           setValue(null);
           // Close editor
-          FileEditorManager editorManager = FileEditorManager.getInstance(project);
+          FileEditorManager editorManager =
+              FileEditorManager.getInstance(project);
           editorManager.closeFile(file);
         }
       });
@@ -195,6 +198,7 @@ public final class ImageEditorImpl implements ImageEditor {
 
   public void refreshFile() {
     Runnable postRunnable = () -> setValue(file);
-    RefreshQueue.getInstance().refresh(true, false, postRunnable, ModalityState.current(), file);
+    RefreshQueue.getInstance().refresh(true, false, postRunnable,
+                                       ModalityState.current(), file);
   }
 }

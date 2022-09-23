@@ -16,6 +16,7 @@
 package co.anbora.labs.pdn.actions;
 
 import com.intellij.ide.IdeBundle;
+import com.intellij.openapi.actionSystem.ActionUpdateThread;
 import com.intellij.openapi.actionSystem.AnActionEvent;
 import com.intellij.openapi.actionSystem.ToggleAction;
 import co.anbora.labs.pdn.options.DefaultImageEditorSettings;
@@ -50,5 +51,10 @@ public final class ToggleTransparencyChessboardAction extends ToggleAction {
     ImageComponentDecorator decorator = e.getData(ImageComponentDecorator.DATA_KEY);
     e.getPresentation().setEnabled(decorator != null && decorator.isEnabledForActionPlace(e.getPlace()));
     e.getPresentation().setText(isSelected(e) ? IdeBundle.message("action.text.hide.chessboard") : IdeBundle.message("action.text.show.chessboard"));
+  }
+
+  @Override
+  public @NotNull ActionUpdateThread getActionUpdateThread() {
+    return ActionUpdateThread.EDT;
   }
 }

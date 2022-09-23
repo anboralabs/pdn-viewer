@@ -74,8 +74,8 @@ final class EditorOptionsImpl implements EditorOptions, JDOMExternalizable {
     @Override
     public boolean setOption(String name, Object value) {
         return gridOptions.setOption(name, value) ||
-                   transparencyChessboardOptions.setOption(name, value) ||
-                   zoomOptions.setOption(name, value);
+                transparencyChessboardOptions.setOption(name, value) ||
+                zoomOptions.setOption(name, value);
     }
 
     @Override

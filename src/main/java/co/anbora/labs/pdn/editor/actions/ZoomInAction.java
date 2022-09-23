@@ -18,6 +18,7 @@ package co.anbora.labs.pdn.editor.actions;
 import co.anbora.labs.pdn.editor.ImageEditor;
 import co.anbora.labs.pdn.editor.ImageZoomModel;
 import co.anbora.labs.pdn.editor.actionSystem.ImageEditorActionUtil;
+import com.intellij.openapi.actionSystem.ActionUpdateThread;
 import com.intellij.openapi.actionSystem.AnAction;
 import com.intellij.openapi.actionSystem.AnActionEvent;
 import com.intellij.openapi.project.DumbAware;
@@ -47,5 +48,10 @@ public final class ZoomInAction extends AnAction implements DumbAware {
             ImageZoomModel zoomModel = decorator.getZoomModel();
             e.getPresentation().setEnabled(zoomModel.canZoomIn());
         }
+    }
+
+    @Override
+    public @NotNull ActionUpdateThread getActionUpdateThread() {
+        return ActionUpdateThread.EDT;
     }
 }

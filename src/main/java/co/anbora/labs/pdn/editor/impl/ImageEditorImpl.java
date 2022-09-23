@@ -47,10 +47,10 @@ public final class ImageEditorImpl implements ImageEditor {
     this(project, file, false, true);
   }
 
-    /**
-     * @param isEmbedded if it's true the toolbar and the image info are disabled and an image is left-side aligned
-     * @param isOpaque if it's false, all components of the editor are transparent
-     */
+  /**
+   * @param isEmbedded if it's true the toolbar and the image info are disabled and an image is left-side aligned
+   * @param isOpaque if it's false, all components of the editor are transparent
+   */
   public ImageEditorImpl(@NotNull Project project, @NotNull VirtualFile file, boolean isEmbedded, boolean isOpaque) {
     this.project = project;
     this.file = file;

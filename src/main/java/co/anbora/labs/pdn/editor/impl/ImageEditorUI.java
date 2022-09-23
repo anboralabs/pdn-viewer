@@ -150,8 +150,8 @@ final class ImageEditorUI extends JPanel implements DataProvider, CopyProvider, 
     }
 
     JLabel errorLabel = new JLabel(
-      ImagesBundle.message("error.broken.image.file.format"),
-      Messages.getErrorIcon(), SwingConstants.CENTER
+            ImagesBundle.message("error.broken.image.file.format"),
+            Messages.getErrorIcon(), SwingConstants.CENTER
     );
 
     JPanel errorPanel = new JPanel(new BorderLayout());
@@ -203,9 +203,9 @@ final class ImageEditorUI extends JPanel implements DataProvider, CopyProvider, 
       }
       VirtualFile file = editor != null ? editor.getFile() : null;
       infoLabel.setText(
-        ImagesBundle.message("image.info",
-                             image.getWidth(), image.getHeight(), format,
-                             colorModel.getPixelSize(), file != null ? StringUtil.formatFileSize(file.getLength()) : ""));
+              ImagesBundle.message("image.info",
+                      image.getWidth(), image.getHeight(), format,
+                      colorModel.getPixelSize(), file != null ? StringUtil.formatFileSize(file.getLength()) : ""));
     } else {
       infoLabel.setText(null);
     }
@@ -317,7 +317,7 @@ final class ImageEditorUI extends JPanel implements DataProvider, CopyProvider, 
           double factor = model.getZoomFactor();
           model.setZoomFactor(scale * factor);
           return new Point(((int)((at.x - Math.max(scale > 1.0 ? locationBefore.x : 0, 0)) * scale)),
-                           ((int)((at.y - Math.max(scale > 1.0 ? locationBefore.y : 0, 0)) * scale)));
+                  ((int)((at.y - Math.max(scale > 1.0 ? locationBefore.y : 0, 0)) * scale)));
         }
       });
     }
@@ -370,7 +370,7 @@ final class ImageEditorUI extends JPanel implements DataProvider, CopyProvider, 
           Point mousePoint = e.getPoint();
           double zoomChange = zoomModel.getZoomFactor() / oldZoomFactor;
           Point newPosition = new Point((int)Math.max(0, (oldPosition.getX() + mousePoint.getX()) * zoomChange - mousePoint.getX()),
-                                        (int)Math.max(0, (oldPosition.getY() + mousePoint.getY()) * zoomChange - mousePoint.getY()));
+                  (int)Math.max(0, (oldPosition.getY() + mousePoint.getY()) * zoomChange - mousePoint.getY()));
           myScrollPane.getViewport().setViewPosition(newPosition);
         }
 
@@ -520,9 +520,9 @@ final class ImageEditorUI extends JPanel implements DataProvider, CopyProvider, 
 
     Dimension preferredMinimumSize = zoomOptions.getPrefferedSize();
     if (width < preferredMinimumSize.width &&
-        height < preferredMinimumSize.height) {
+            height < preferredMinimumSize.height) {
       double factor = (preferredMinimumSize.getWidth() / (double)width +
-                       preferredMinimumSize.getHeight() / (double)height) / 2.0d;
+              preferredMinimumSize.getHeight() / (double)height) / 2.0d;
       return Math.ceil(factor);
     }
 
@@ -532,9 +532,9 @@ final class ImageEditorUI extends JPanel implements DataProvider, CopyProvider, 
     if (canvasSize.width <= 0 || canvasSize.height <= 0) return null;
 
     if (canvasSize.width < width ||
-        canvasSize.height < height) {
+            canvasSize.height < height) {
       return Math.min((double)canvasSize.height / height,
-                      (double)canvasSize.width / width);
+              (double)canvasSize.width / width);
     }
 
     return 1.0d;
@@ -585,16 +585,6 @@ final class ImageEditorUI extends JPanel implements DataProvider, CopyProvider, 
     else if (CommonDataKeys.VIRTUAL_FILE_ARRAY.is(dataId)) {
       return editor != null ? new VirtualFile[]{editor.getFile()} : VirtualFile.EMPTY_ARRAY;
     }
-    else if (CommonDataKeys.PSI_FILE.is(dataId)) {
-      return findPsiFile();
-    }
-    else if (CommonDataKeys.PSI_ELEMENT.is(dataId)) {
-      return findPsiFile();
-    }
-    else if (LangDataKeys.PSI_ELEMENT_ARRAY.is(dataId)) {
-      PsiElement psi = findPsiFile();
-      return psi != null ? new PsiElement[]{psi} : PsiElement.EMPTY_ARRAY;
-    }
     else if (PlatformDataKeys.COPY_PROVIDER.is(dataId)) {
       return this;
     }
@@ -607,7 +597,23 @@ final class ImageEditorUI extends JPanel implements DataProvider, CopyProvider, 
     else if (ImageComponentDecorator.DATA_KEY.is(dataId)) {
       return editor != null ? editor : this;
     }
+    else if (PlatformCoreDataKeys.BGT_DATA_PROVIDER.is(dataId)) {
+      return (DataProvider)slowId -> getSlowData(slowId);
+    }
+    return null;
+  }
 
+  private @Nullable Object getSlowData(@NotNull String dataId) {
+    if (CommonDataKeys.PSI_FILE.is(dataId)) {
+      return findPsiFile();
+    }
+    else if (CommonDataKeys.PSI_ELEMENT.is(dataId)) {
+      return findPsiFile();
+    }
+    else if (PlatformCoreDataKeys.PSI_ELEMENT_ARRAY.is(dataId)) {
+      PsiElement psi = findPsiFile();
+      return psi != null ? new PsiElement[]{psi} : PsiElement.EMPTY_ARRAY;
+    }
     return null;
   }
 
@@ -622,6 +628,11 @@ final class ImageEditorUI extends JPanel implements DataProvider, CopyProvider, 
     ImageDocument document = imageComponent.getDocument();
     BufferedImage image = document.getValue();
     CopyPasteManager.getInstance().setContents(new ImageTransferable(image));
+  }
+
+  @Override
+  public @NotNull ActionUpdateThread getActionUpdateThread() {
+    return ActionUpdateThread.BGT;
   }
 
   @Override

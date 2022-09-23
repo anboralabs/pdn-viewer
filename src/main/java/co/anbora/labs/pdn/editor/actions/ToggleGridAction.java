@@ -18,6 +18,7 @@ package co.anbora.labs.pdn.editor.actions;
 import co.anbora.labs.pdn.editor.ImageEditor;
 import co.anbora.labs.pdn.editor.actionSystem.ImageEditorActionUtil;
 import com.intellij.ide.IdeBundle;
+import com.intellij.openapi.actionSystem.ActionUpdateThread;
 import com.intellij.openapi.actionSystem.AnActionEvent;
 import com.intellij.openapi.actionSystem.ToggleAction;
 import com.intellij.openapi.project.DumbAware;
@@ -50,5 +51,10 @@ public final class ToggleGridAction extends ToggleAction implements DumbAware {
     super.update(e);
     ImageEditorActionUtil.setEnabled(e);
     e.getPresentation().setText(isSelected(e) ? IdeBundle.message("action.text.hide.grid") : IdeBundle.message("action.text.show.grid"));
+  }
+
+  @Override
+  public @NotNull ActionUpdateThread getActionUpdateThread() {
+    return ActionUpdateThread.EDT;
   }
 }

@@ -18,11 +18,11 @@ package co.anbora.labs.pdn.editor.actions;
 import co.anbora.labs.pdn.editor.ImageEditor;
 import co.anbora.labs.pdn.editor.ImageZoomModel;
 import co.anbora.labs.pdn.editor.actionSystem.ImageEditorActionUtil;
+import co.anbora.labs.pdn.ui.ImageComponentDecorator;
 import com.intellij.openapi.actionSystem.ActionUpdateThread;
 import com.intellij.openapi.actionSystem.AnAction;
 import com.intellij.openapi.actionSystem.AnActionEvent;
 import com.intellij.openapi.project.DumbAware;
-import co.anbora.labs.pdn.ui.ImageComponentDecorator;
 import org.jetbrains.annotations.NotNull;
 
 /**
@@ -33,27 +33,29 @@ import org.jetbrains.annotations.NotNull;
  * @see ImageZoomModel#setZoomFactor
  */
 public final class ActualSizeAction extends AnAction implements DumbAware {
-    @Override
-    public void actionPerformed(@NotNull AnActionEvent e) {
-        ImageComponentDecorator decorator = ImageEditorActionUtil.getImageComponentDecorator(e);
-        if (decorator != null) {
-            ImageZoomModel zoomModel = decorator.getZoomModel();
-            zoomModel.setZoomFactor(1.0d);
-            zoomModel.setZoomLevelChanged(true);
-        }
+  @Override
+  public void actionPerformed(@NotNull AnActionEvent e) {
+    ImageComponentDecorator decorator =
+        ImageEditorActionUtil.getImageComponentDecorator(e);
+    if (decorator != null) {
+      ImageZoomModel zoomModel = decorator.getZoomModel();
+      zoomModel.setZoomFactor(1.0d);
+      zoomModel.setZoomLevelChanged(true);
     }
+  }
 
-    @Override
-    public void update(@NotNull AnActionEvent e) {
-        if (ImageEditorActionUtil.setEnabled(e)) {
-            ImageComponentDecorator decorator = ImageEditorActionUtil.getImageComponentDecorator(e);
-            ImageZoomModel zoomModel = decorator.getZoomModel();
-            e.getPresentation().setEnabled(zoomModel.getZoomFactor() != 1.0d);
-        }
+  @Override
+  public void update(@NotNull AnActionEvent e) {
+    if (ImageEditorActionUtil.setEnabled(e)) {
+      ImageComponentDecorator decorator =
+          ImageEditorActionUtil.getImageComponentDecorator(e);
+      ImageZoomModel zoomModel = decorator.getZoomModel();
+      e.getPresentation().setEnabled(zoomModel.getZoomFactor() != 1.0d);
     }
+  }
 
-    @Override
-    public @NotNull ActionUpdateThread getActionUpdateThread() {
-        return ActionUpdateThread.EDT;
-    }
+  @Override
+  public @NotNull ActionUpdateThread getActionUpdateThread() {
+    return ActionUpdateThread.EDT;
+  }
 }

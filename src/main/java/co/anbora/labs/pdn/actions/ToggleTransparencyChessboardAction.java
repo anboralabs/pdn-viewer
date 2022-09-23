@@ -15,12 +15,12 @@
  */
 package co.anbora.labs.pdn.actions;
 
+import co.anbora.labs.pdn.options.DefaultImageEditorSettings;
+import co.anbora.labs.pdn.ui.ImageComponentDecorator;
 import com.intellij.ide.IdeBundle;
 import com.intellij.openapi.actionSystem.ActionUpdateThread;
 import com.intellij.openapi.actionSystem.AnActionEvent;
 import com.intellij.openapi.actionSystem.ToggleAction;
-import co.anbora.labs.pdn.options.DefaultImageEditorSettings;
-import co.anbora.labs.pdn.ui.ImageComponentDecorator;
 import org.jetbrains.annotations.NotNull;
 
 /**
@@ -32,13 +32,17 @@ import org.jetbrains.annotations.NotNull;
 public final class ToggleTransparencyChessboardAction extends ToggleAction {
   @Override
   public boolean isSelected(@NotNull AnActionEvent e) {
-    ImageComponentDecorator decorator = e.getData(ImageComponentDecorator.DATA_KEY);
-    return decorator != null && decorator.isEnabledForActionPlace(e.getPlace()) && decorator.isTransparencyChessboardVisible();
+    ImageComponentDecorator decorator =
+        e.getData(ImageComponentDecorator.DATA_KEY);
+    return decorator != null &&
+        decorator.isEnabledForActionPlace(e.getPlace()) &&
+        decorator.isTransparencyChessboardVisible();
   }
 
   @Override
   public void setSelected(@NotNull AnActionEvent e, boolean state) {
-    ImageComponentDecorator decorator = e.getData(ImageComponentDecorator.DATA_KEY);
+    ImageComponentDecorator decorator =
+        e.getData(ImageComponentDecorator.DATA_KEY);
     if (decorator != null && decorator.isEnabledForActionPlace(e.getPlace())) {
       decorator.setTransparencyChessboardVisible(state);
       DefaultImageEditorSettings.INSTANCE.setShowChessboard(state);
@@ -48,9 +52,13 @@ public final class ToggleTransparencyChessboardAction extends ToggleAction {
   @Override
   public void update(@NotNull final AnActionEvent e) {
     super.update(e);
-    ImageComponentDecorator decorator = e.getData(ImageComponentDecorator.DATA_KEY);
-    e.getPresentation().setEnabled(decorator != null && decorator.isEnabledForActionPlace(e.getPlace()));
-    e.getPresentation().setText(isSelected(e) ? IdeBundle.message("action.text.hide.chessboard") : IdeBundle.message("action.text.show.chessboard"));
+    ImageComponentDecorator decorator =
+        e.getData(ImageComponentDecorator.DATA_KEY);
+    e.getPresentation().setEnabled(
+        decorator != null && decorator.isEnabledForActionPlace(e.getPlace()));
+    e.getPresentation().setText(
+        isSelected(e) ? IdeBundle.message("action.text.hide.chessboard")
+                      : IdeBundle.message("action.text.show.chessboard"));
   }
 
   @Override

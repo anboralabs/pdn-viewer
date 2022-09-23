@@ -17,11 +17,12 @@ package co.anbora.labs.pdn.editor.actions;
 
 import co.anbora.labs.pdn.editor.ImageEditor;
 import co.anbora.labs.pdn.editor.actionSystem.ImageEditorActionUtil;
+import co.anbora.labs.pdn.ui.ImageComponentDecorator;
 import com.intellij.ide.IdeBundle;
+import com.intellij.openapi.actionSystem.ActionUpdateThread;
 import com.intellij.openapi.actionSystem.AnActionEvent;
 import com.intellij.openapi.actionSystem.ToggleAction;
 import com.intellij.openapi.project.DumbAware;
-import co.anbora.labs.pdn.ui.ImageComponentDecorator;
 import org.jetbrains.annotations.NotNull;
 
 /**
@@ -33,13 +34,15 @@ import org.jetbrains.annotations.NotNull;
 public final class ToggleGridAction extends ToggleAction implements DumbAware {
   @Override
   public boolean isSelected(@NotNull AnActionEvent e) {
-    ImageComponentDecorator decorator = ImageEditorActionUtil.getImageComponentDecorator(e);
+    ImageComponentDecorator decorator =
+        ImageEditorActionUtil.getImageComponentDecorator(e);
     return decorator != null && decorator.isGridVisible();
   }
 
   @Override
   public void setSelected(@NotNull AnActionEvent e, boolean state) {
-    ImageComponentDecorator decorator = ImageEditorActionUtil.getImageComponentDecorator(e);
+    ImageComponentDecorator decorator =
+        ImageEditorActionUtil.getImageComponentDecorator(e);
     if (decorator != null) {
       decorator.setGridVisible(state);
     }
@@ -49,6 +52,13 @@ public final class ToggleGridAction extends ToggleAction implements DumbAware {
   public void update(@NotNull final AnActionEvent e) {
     super.update(e);
     ImageEditorActionUtil.setEnabled(e);
-    e.getPresentation().setText(isSelected(e) ? IdeBundle.message("action.text.hide.grid") : IdeBundle.message("action.text.show.grid"));
+    e.getPresentation().setText(
+        isSelected(e) ? IdeBundle.message("action.text.hide.grid")
+                      : IdeBundle.message("action.text.show.grid"));
+  }
+
+  @Override
+  public @NotNull ActionUpdateThread getActionUpdateThread() {
+    return ActionUpdateThread.EDT;
   }
 }

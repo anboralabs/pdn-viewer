@@ -17,19 +17,21 @@ package co.anbora.labs.pdn.editor.actions;
 
 import co.anbora.labs.pdn.editor.ImageZoomModel;
 import co.anbora.labs.pdn.editor.actionSystem.ImageEditorActionUtil;
-import com.intellij.openapi.actionSystem.AnAction;
-import com.intellij.openapi.actionSystem.AnActionEvent;
-import com.intellij.openapi.project.DumbAware;
 import co.anbora.labs.pdn.options.Options;
 import co.anbora.labs.pdn.options.OptionsManager;
 import co.anbora.labs.pdn.options.ZoomOptions;
 import co.anbora.labs.pdn.ui.ImageComponentDecorator;
+import com.intellij.openapi.actionSystem.ActionUpdateThread;
+import com.intellij.openapi.actionSystem.AnAction;
+import com.intellij.openapi.actionSystem.AnActionEvent;
+import com.intellij.openapi.project.DumbAware;
 import org.jetbrains.annotations.NotNull;
 
 final class FitZoomToWindowAction extends AnAction implements DumbAware {
   @Override
   public void actionPerformed(@NotNull AnActionEvent e) {
-    ImageComponentDecorator decorator = ImageEditorActionUtil.getImageComponentDecorator(e);
+    ImageComponentDecorator decorator =
+        ImageEditorActionUtil.getImageComponentDecorator(e);
     if (decorator != null) {
       ImageZoomModel zoomModel = decorator.getZoomModel();
       zoomModel.fitZoomToWindow();
@@ -41,9 +43,16 @@ final class FitZoomToWindowAction extends AnAction implements DumbAware {
     if (ImageEditorActionUtil.setEnabled(e)) {
       Options options = OptionsManager.getInstance().getOptions();
       ZoomOptions zoomOptions = options.getEditorOptions().getZoomOptions();
-      ImageComponentDecorator decorator = ImageEditorActionUtil.getImageComponentDecorator(e);
+      ImageComponentDecorator decorator =
+          ImageEditorActionUtil.getImageComponentDecorator(e);
       ImageZoomModel zoomModel = decorator.getZoomModel();
-      e.getPresentation().setEnabled(zoomModel.isZoomLevelChanged() || !zoomOptions.isSmartZooming());
+      e.getPresentation().setEnabled(zoomModel.isZoomLevelChanged() ||
+                                     !zoomOptions.isSmartZooming());
     }
+  }
+
+  @Override
+  public @NotNull ActionUpdateThread getActionUpdateThread() {
+    return ActionUpdateThread.EDT;
   }
 }

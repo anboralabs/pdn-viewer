@@ -165,26 +165,18 @@ final class ThumbnailViewUI extends JPanel implements DataProvider, Disposable {
         tagsList.setEmptyText(ImagesBundle.message("list.empty.text.no.tags.defined"));
         ImageTagManager imageTagManager = ImageTagManager.getInstance(thumbnailView.getProject());
         return ToolbarDecorator.createDecorator(tagsList)
-          .setAddAction(new AnActionButtonRunnable() {
-              @Override
-              public void run(AnActionButton button) {
-                  JBPopupFactory.getInstance().createActionGroupPopup(IdeBundle.message("popup.title.add.tags"),
-                                                                      new AddTagGroup(),
-                                                                      button.getDataContext(),
-                                                                      JBPopupFactory.ActionSelectionAid.SPEEDSEARCH, false)
-                    .show(button.getPreferredPopupPoint());
+          .setAddAction(button -> JBPopupFactory.getInstance().createActionGroupPopup(IdeBundle.message("popup.title.add.tags"),
+                                                              new AddTagGroup(),
+                                                              button.getDataContext(),
+                                                              JBPopupFactory.ActionSelectionAid.SPEEDSEARCH, false)
+            .show(button.getPreferredPopupPoint()))
+          .setRemoveAction(button -> {
+              String selectedValue = tagsList.getSelectedValue();
+              if (selectedValue != null) {
+                  Arrays.stream(getSelection())
+                    .forEach(virtualFile -> imageTagManager.removeTag(selectedValue, virtualFile));
               }
-          })
-          .setRemoveAction(new AnActionButtonRunnable() {
-              @Override
-              public void run(AnActionButton button) {
-                  String selectedValue = tagsList.getSelectedValue();
-                  if (selectedValue != null) {
-                      Arrays.stream(getSelection())
-                        .forEach(virtualFile -> imageTagManager.removeTag(selectedValue, virtualFile));
-                  }
-                  updateTagsPreviewModel();
-              }
+              updateTagsPreviewModel();
           })
           .disableUpDownActions()
           .setToolbarPosition(ActionToolbarPosition.RIGHT)

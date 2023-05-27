@@ -5,7 +5,9 @@ import co.anbora.labs.pdn.options.impl.ImageEditorColorSchemeSettingsKt;
 import com.intellij.openapi.editor.colors.EditorColorsManager;
 import com.intellij.openapi.editor.colors.EditorColorsScheme;
 import com.intellij.ui.JBColor;
+import com.intellij.ui.scale.CompatibilityScaleContextCache;
 import com.intellij.ui.scale.ScaleContext;
+import com.intellij.ui.scale.ScaleContextCache;
 import com.intellij.util.containers.ContainerUtil;
 import co.anbora.labs.pdn.ImagesBundle;
 import co.anbora.labs.pdn.editor.ImageDocument;
@@ -56,7 +58,6 @@ public class ImageComponent extends JComponent {
 
     /**
      * @see #getUIClassID
-     * @see #readObject
      */
     @NonNls
     private static final String uiClassID = "ImageComponentUI";
@@ -250,7 +251,7 @@ public class ImageComponent extends JComponent {
         private String format;
         private Image renderer;
         private final Component myComponent;
-        private final ScaleContext.Cache<Rectangle> cachedBounds = new ScaleContext.Cache<>((ctx) -> {
+        private final CompatibilityScaleContextCache<Rectangle> cachedBounds = new CompatibilityScaleContextCache<>((ctx) -> {
             BufferedImage image = getValue(ctx.getScale(OBJ_SCALE));
             return image != null ? new Rectangle(image.getWidth(), image.getHeight()) : null;
         });

@@ -5,7 +5,7 @@ plugins {
 }
 
 group = "co.anbora.labs"
-version = "1.4.0"
+version = "1.4.1"
 
 repositories {
     mavenCentral()
@@ -27,6 +27,7 @@ apply {
 intellij {
     version.set("LATEST-EAP-SNAPSHOT")
     type.set("IU") // Target IDE Platform
+    downloadSources.set(true)
     plugins.set(listOf())
 }
 

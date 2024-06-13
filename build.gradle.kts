@@ -27,10 +27,6 @@ repositories {
 }
 
 dependencies {
-    implementation("com.github.dalgarins:pdn-java:0.1.8")
-    testImplementation("org.junit.jupiter:junit-jupiter-api:5.8.2")
-    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.8.2")
-
     // IntelliJ Platform Gradle Plugin Dependencies Extension - read more: https://plugins.jetbrains.com/docs/intellij/tools-intellij-platform-gradle-plugin-dependencies-extension.html
     intellijPlatform {
         create(properties("platformType"), properties("platformVersion"))
@@ -43,7 +39,12 @@ dependencies {
 
         instrumentationTools()
         pluginVerifier()
+        // testFramework(TestFrameworkType.Platform.JUnit4)
     }
+
+    implementation("com.github.dalgarins:pdn-java:0.1.8")
+    testImplementation("org.junit.jupiter:junit-jupiter-api:5.8.2")
+    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.8.2")
 }
 
 // Configure IntelliJ Platform Gradle Plugin - read more: https://plugins.jetbrains.com/docs/intellij/tools-intellij-platform-gradle-plugin-extension.html
@@ -77,5 +78,8 @@ intellijPlatform {
 tasks {
     wrapper {
         gradleVersion = properties("gradleVersion").get()
+    }
+
+    publishPlugin {
     }
 }

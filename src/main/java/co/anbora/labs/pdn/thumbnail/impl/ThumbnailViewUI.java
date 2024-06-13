@@ -329,7 +329,7 @@ final class ThumbnailViewUI extends JPanel implements DataProvider, Disposable {
     return index != -1 && list.isSelectedIndex(index);
   }
 
-  public VirtualFile @NotNull[] getSelection() {
+  public VirtualFile[] getSelection() {
     if (list != null) {
       Object[] selectedValues = list.getSelectedValues();
       if (selectedValues != null) {
@@ -598,7 +598,7 @@ final class ThumbnailViewUI extends JPanel implements DataProvider, Disposable {
     return null;
   }
 
-  private PsiElement @NotNull[] getSelectedElements() {
+  private PsiElement[] getSelectedElements() {
     VirtualFile[] selectedFiles = getSelectedFiles();
     Set<PsiElement> psiElements = new HashSet<>(selectedFiles.length);
     PsiManager psiManager = PsiManager.getInstance(thumbnailView.getProject());
@@ -613,7 +613,7 @@ final class ThumbnailViewUI extends JPanel implements DataProvider, Disposable {
     return PsiUtilCore.toPsiElementArray(psiElements);
   }
 
-  private VirtualFile @NotNull[] getSelectedFiles() {
+  private VirtualFile[] getSelectedFiles() {
     if (list != null) {
       Object[] selectedValues = list.getSelectedValues();
       if (selectedValues != null) {
@@ -738,7 +738,7 @@ final class ThumbnailViewUI extends JPanel implements DataProvider, Disposable {
     public AddTagGroup() { setPopup(true); }
 
     @Override
-    public AnAction @NotNull[] getChildren(@Nullable AnActionEvent e) {
+    public AnAction[] getChildren(@Nullable AnActionEvent e) {
       if (e == null)
         return EMPTY_ARRAY;
       Project project = e.getProject();

@@ -1,25 +1,25 @@
-// Copyright 2000-2020 JetBrains s.r.o. Use of this source code is governed by the Apache 2.0 license that can be found in the LICENSE file.
+// Copyright 2000-2020 JetBrains s.r.o. Use of this source code is governed by
+// the Apache 2.0 license that can be found in the LICENSE file.
 
 package co.anbora.labs.pdn.thumbnail.impl;
 
+import co.anbora.labs.pdn.ImagesBundle;
+import co.anbora.labs.pdn.editor.ImageZoomModel;
+import co.anbora.labs.pdn.editor.actionSystem.ImageEditorActions;
+import co.anbora.labs.pdn.icons.ImagesIcons;
+import co.anbora.labs.pdn.search.TagFilter;
 import co.anbora.labs.pdn.thumbnail.ThumbnailView;
 import co.anbora.labs.pdn.thumbnail.actions.ThemeFilter;
+import co.anbora.labs.pdn.vfs.IfsUtil;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.util.Disposer;
 import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.openapi.wm.ToolWindow;
 import com.intellij.openapi.wm.ToolWindowAnchor;
 import com.intellij.openapi.wm.ToolWindowManager;
-import co.anbora.labs.pdn.icons.ImagesIcons;
-import co.anbora.labs.pdn.ImagesBundle;
-import co.anbora.labs.pdn.editor.ImageZoomModel;
-import co.anbora.labs.pdn.editor.actionSystem.ImageEditorActions;
-import co.anbora.labs.pdn.search.TagFilter;
-import co.anbora.labs.pdn.vfs.IfsUtil;
+import javax.swing.*;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-
-import javax.swing.*;
 
 /**
  * Thumbnail view.
@@ -43,15 +43,15 @@ final class ThumbnailViewImpl implements ThumbnailView {
     ToolWindowManager windowManager = ToolWindowManager.getInstance(project);
     myThumbnailViewUI = new ThumbnailViewUI(this);
     Disposer.register(this, myThumbnailViewUI);
-    toolWindow = windowManager.registerToolWindow(TOOLWINDOW_ID, myThumbnailViewUI, ToolWindowAnchor.BOTTOM);
-    toolWindow.setStripeTitle(ImagesBundle.message("thumbnails.toolwindow.name"));
+    toolWindow = windowManager.registerToolWindow(
+        TOOLWINDOW_ID, myThumbnailViewUI, ToolWindowAnchor.BOTTOM);
+    toolWindow.setStripeTitle(
+        ImagesBundle.message("thumbnails.toolwindow.name"));
     toolWindow.setIcon(ImagesIcons.ThumbnailToolWindow);
     setVisible(false);
   }
 
-  private ThumbnailViewUI getUI() {
-    return myThumbnailViewUI;
-  }
+  private ThumbnailViewUI getUI() { return myThumbnailViewUI; }
 
   @Override
   public void setRoot(@NotNull VirtualFile root) {
@@ -88,7 +88,7 @@ final class ThumbnailViewImpl implements ThumbnailView {
   }
 
   @Override
-  public VirtualFile @NotNull [] getSelection() {
+  public VirtualFile[] getSelection() {
     if (isVisible()) {
       return getUI().getSelection();
     }
@@ -100,8 +100,7 @@ final class ThumbnailViewImpl implements ThumbnailView {
     if (isVisible()) {
       if (!toolWindow.isActive()) {
         toolWindow.activate(new LazyScroller());
-      }
-      else {
+      } else {
         getUI().scrollToSelection();
       }
     }
@@ -137,7 +136,7 @@ final class ThumbnailViewImpl implements ThumbnailView {
   }
 
   @Override
-  public TagFilter @Nullable [] getTagFilters() {
+  public TagFilter[] getTagFilters() {
     return myTagFilters;
   }
 
@@ -163,7 +162,8 @@ final class ThumbnailViewImpl implements ThumbnailView {
   }
 
   private void setTitle() {
-    toolWindow.setTitle(root != null ? IfsUtil.getReferencePath(project, root) : null);
+    toolWindow.setTitle(root != null ? IfsUtil.getReferencePath(project, root)
+                                     : null);
   }
 
   @Override
@@ -227,8 +227,7 @@ final class ThumbnailViewImpl implements ThumbnailView {
   }
 
   @Override
-  public void setGridVisible(boolean visible) {
-  }
+  public void setGridVisible(boolean visible) {}
 
   @Override
   public boolean isGridVisible() {

@@ -15,29 +15,30 @@
  */
 package co.anbora.labs.pdn.thumbnail;
 
+import co.anbora.labs.pdn.search.TagFilter;
+import co.anbora.labs.pdn.thumbnail.actions.ThemeFilter;
+import co.anbora.labs.pdn.ui.ImageComponentDecorator;
 import com.intellij.openapi.Disposable;
 import com.intellij.openapi.actionSystem.DataKey;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.vfs.VirtualFile;
-import co.anbora.labs.pdn.search.TagFilter;
-import co.anbora.labs.pdn.thumbnail.actions.ThemeFilter;
-import co.anbora.labs.pdn.ui.ImageComponentDecorator;
 import org.jetbrains.annotations.NonNls;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 /**
- * Thumbnail thumbnail is a component with thumbnails for a set of {@link VirtualFile}.
+ * Thumbnail thumbnail is a component with thumbnails for a set of {@link
+ * VirtualFile}.
  *
  * @author <a href="mailto:aefimov.box@gmail.com">Alexey Efimov</a>
  */
 public interface ThumbnailView extends Disposable, ImageComponentDecorator {
-  DataKey<ThumbnailView> DATA_KEY = DataKey.create(ThumbnailView.class.getName());
+  DataKey<ThumbnailView> DATA_KEY =
+      DataKey.create(ThumbnailView.class.getName());
 
   @NonNls String TOOLWINDOW_ID = "Thumbnails";
 
-  @NotNull
-  Project getProject();
+  @NotNull Project getProject();
 
   /**
    * Add virtual files to view
@@ -61,7 +62,7 @@ public interface ThumbnailView extends Disposable, ImageComponentDecorator {
 
   boolean isSelected(@NotNull VirtualFile file);
 
-  VirtualFile @NotNull [] getSelection();
+  VirtualFile[] getSelection();
 
   /**
    * Scroll to selection. If ToolWindow is not active, then
@@ -80,15 +81,14 @@ public interface ThumbnailView extends Disposable, ImageComponentDecorator {
   /**
    * null means all files accepted
    */
-  @Nullable
-  ThemeFilter getFilter();
+  @Nullable ThemeFilter getFilter();
 
   void setTagFilters(TagFilter[] filter);
 
   /**
    * null means all files accepted
    */
-  TagFilter @Nullable [] getTagFilters();
+  TagFilter[] getTagFilters();
 
   /**
    * update UI: preview visibility, etc

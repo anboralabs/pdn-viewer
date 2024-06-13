@@ -1,18 +1,18 @@
-// Copyright 2000-2020 JetBrains s.r.o. Use of this source code is governed by the Apache 2.0 license that can be found in the LICENSE file.
+// Copyright 2000-2020 JetBrains s.r.o. Use of this source code is governed by
+// the Apache 2.0 license that can be found in the LICENSE file.
 package co.anbora.labs.pdn.util;
 
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
-
-import javax.imageio.ImageIO;
-import javax.imageio.ImageReader;
-import javax.imageio.ImageTypeSpecifier;
-import javax.imageio.stream.ImageInputStream;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.Objects;
+import javax.imageio.ImageIO;
+import javax.imageio.ImageReader;
+import javax.imageio.ImageTypeSpecifier;
+import javax.imageio.stream.ImageInputStream;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 public final class ImageInfoReader {
   @Nullable
@@ -35,11 +35,13 @@ public final class ImageInfoReader {
         int w = reader.getWidth(0);
         int h = reader.getHeight(0);
         Iterator<ImageTypeSpecifier> it2 = reader.getImageTypes(0);
-        int bpp = it2 != null && it2.hasNext() ? it2.next().getColorModel().getPixelSize() : -1;
+        int bpp = it2 != null && it2.hasNext()
+                      ? it2.next().getColorModel().getPixelSize()
+                      : -1;
         return new Info(w, h, bpp, false);
       }
+    } catch (Throwable ignore) {
     }
-    catch (Throwable ignore) {}
     return null;
   }
 
@@ -51,15 +53,16 @@ public final class ImageInfoReader {
       myIsSvg = isSvg;
     }
 
-    public boolean isSvg() {
-      return myIsSvg;
-    }
+    public boolean isSvg() { return myIsSvg; }
 
     @Override
     public boolean equals(Object o) {
-      if (this == o) return true;
-      if (o == null || getClass() != o.getClass()) return false;
-      if (!super.equals(o)) return false;
+      if (this == o)
+        return true;
+      if (o == null || getClass() != o.getClass())
+        return false;
+      if (!super.equals(o))
+        return false;
       Info info = (Info)o;
       return myIsSvg == info.myIsSvg;
     }
@@ -70,17 +73,18 @@ public final class ImageInfoReader {
     }
   }
 
-  private static final byte[] APPLE_PNG_SIGNATURE = {-119, 80, 78, 71, 13, 10, 26, 10, 0, 0, 0, 4, 67, 103, 66, 73};
+  private static final byte[] APPLE_PNG_SIGNATURE = {
+      -119, 80, 78, 71, 13, 10, 26, 10, 0, 0, 0, 4, 67, 103, 66, 73};
 
-  private static boolean isAppleOptimizedPNG(@NotNull ImageInputStream iis) throws IOException {
+  private static boolean isAppleOptimizedPNG(@NotNull ImageInputStream iis)
+      throws IOException {
     try {
       byte[] signature = new byte[APPLE_PNG_SIGNATURE.length];
       if (iis.read(signature) != APPLE_PNG_SIGNATURE.length) {
         return false;
       }
       return Arrays.equals(signature, APPLE_PNG_SIGNATURE);
-    }
-    finally {
+    } finally {
       iis.seek(0);
     }
   }

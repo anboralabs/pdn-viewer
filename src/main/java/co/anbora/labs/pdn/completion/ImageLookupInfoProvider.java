@@ -15,14 +15,14 @@
  */
 package co.anbora.labs.pdn.completion;
 
+import co.anbora.labs.pdn.fileTypes.ImageFileTypeManager;
+import co.anbora.labs.pdn.index.ImageInfoIndex;
+import co.anbora.labs.pdn.util.ImageInfo;
 import com.intellij.openapi.fileTypes.FileType;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.util.Couple;
 import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.psi.file.FileLookupInfoProvider;
-import co.anbora.labs.pdn.fileTypes.ImageFileTypeManager;
-import co.anbora.labs.pdn.index.ImageInfoIndex;
-import co.anbora.labs.pdn.util.ImageInfo;
 import org.jetbrains.annotations.NotNull;
 
 /**
@@ -30,13 +30,18 @@ import org.jetbrains.annotations.NotNull;
  */
 public class ImageLookupInfoProvider extends FileLookupInfoProvider {
   @Override
-  public Couple<String> getLookupInfo(@NotNull VirtualFile file, Project project) {
+  public Couple<String> getLookupInfo(@NotNull VirtualFile file,
+                                      Project project) {
     ImageInfo imageInfo = ImageInfoIndex.getInfo(file, project);
-    return imageInfo != null ? Couple.of(file.getName(), String.format("%sx%s", imageInfo.width, imageInfo.height)) : null;
+    return imageInfo != null
+        ? Couple.of(file.getName(),
+                    String.format("%sx%s", imageInfo.width, imageInfo.height))
+        : null;
   }
 
   @Override
   public FileType[] getFileTypes() {
-    return new FileType[]{ImageFileTypeManager.getInstance().getImageFileType()};
+    return new FileType[] {
+        ImageFileTypeManager.getInstance().getImageFileType()};
   }
 }

@@ -399,7 +399,7 @@ final class ImageEditorUI extends JPanel
 
     private boolean myZoomLevelChanged;
     private final LazyInitializer
-        .LazyValue<@NotNull Double> IMAGE_MAX_ZOOM_FACTOR =
+        .LazyValue<Double> IMAGE_MAX_ZOOM_FACTOR =
         LazyInitializer.create(() -> {
           if (editor == null)
             return Double.MAX_VALUE;

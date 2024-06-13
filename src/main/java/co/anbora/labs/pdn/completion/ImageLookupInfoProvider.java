@@ -36,7 +36,7 @@ public class ImageLookupInfoProvider extends FileLookupInfoProvider {
   }
 
   @Override
-  public FileType @NotNull [] getFileTypes() {
+  public FileType[] getFileTypes() {
     return new FileType[]{ImageFileTypeManager.getInstance().getImageFileType()};
   }
 }

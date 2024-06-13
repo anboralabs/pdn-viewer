@@ -16,7 +16,7 @@ import java.util.Objects;
 
 public final class ImageInfoReader {
   @Nullable
-  public static Info getInfo(byte @NotNull [] data) {
+  public static Info getInfo(byte[] data) {
     return read(new ByteArrayInputStream(data));
   }
 

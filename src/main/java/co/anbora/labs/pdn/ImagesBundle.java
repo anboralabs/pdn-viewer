@@ -16,12 +16,12 @@ public final class ImagesBundle extends DynamicBundle {
   private ImagesBundle() { super(BUNDLE); }
 
   @NotNull
-  public static @Nls String message(@NotNull @PropertyKey(resourceBundle = BUNDLE) String key, Object @NotNull ... params) {
+  public static @Nls String message(@NotNull @PropertyKey(resourceBundle = BUNDLE) String key, Object ...params) {
     return INSTANCE.getMessage(key, params);
   }
 
   @NotNull
-  public static Supplier<@Nls String> messagePointer(@NotNull @PropertyKey(resourceBundle = BUNDLE) String key, Object @NotNull ... params) {
+  public static Supplier<String> messagePointer(@NotNull @PropertyKey(resourceBundle = BUNDLE) String key, Object ...params) {
     return INSTANCE.getLazyMessage(key, params);
   }
 }

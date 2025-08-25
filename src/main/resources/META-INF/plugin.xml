@@ -1,7 +1,7 @@
 <idea-plugin>
     <id>co.anbora.labs.pdn-viewer</id>
     <name>PDN Viewer</name>
-    <vendor email="anboralabs@gmail.com" url="https://labs.anbora.co">Anbora-labs</vendor>
+    <vendor email="support@anbora.co" url="https://labs.anbora.co">Anbora-labs</vendor>
 
     <description><![CDATA[
     Allow open pdn files, files created with Paint dot net.

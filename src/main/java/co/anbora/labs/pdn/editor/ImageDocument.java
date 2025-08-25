@@ -15,6 +15,7 @@
  */
 package co.anbora.labs.pdn.editor;
 
+import com.intellij.openapi.actionSystem.DataKey;
 import org.jetbrains.annotations.Nullable;
 
 import javax.swing.event.ChangeListener;
@@ -115,4 +116,6 @@ public interface ImageDocument {
     void addChangeListener(ChangeListener listener);
 
     void removeChangeListener(ChangeListener listener);
+
+    DataKey<ImageDocument> IMAGE_DOCUMENT_DATA_KEY = DataKey.create("image.document");
 }

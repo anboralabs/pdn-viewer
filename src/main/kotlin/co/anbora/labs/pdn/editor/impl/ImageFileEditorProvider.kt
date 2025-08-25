@@ -8,9 +8,9 @@ import com.intellij.openapi.project.DumbAware
 import com.intellij.openapi.project.Project
 import com.intellij.openapi.vfs.VirtualFile
 
-object ImageFileEditorProvider: FileEditorProvider, DumbAware {
+private const val EDITOR_TYPE_ID = "3e5a2f35-5f34-4fe0-9ba6-5753ab11ca04_images-pdn"
 
-    private const val EDITOR_TYPE_ID = "images-pdn"
+class ImageFileEditorProvider: FileEditorProvider, DumbAware {
 
     override fun accept(project: Project, file: VirtualFile): Boolean = ImageFileTypeManager.getInstance().isImage(file)
 

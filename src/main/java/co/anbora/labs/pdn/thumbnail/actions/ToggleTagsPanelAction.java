@@ -16,9 +16,9 @@
 
 package co.anbora.labs.pdn.thumbnail.actions;
 
+import co.anbora.labs.pdn.IdeBundle;
 import co.anbora.labs.pdn.thumbnail.ThumbnailView;
 import co.anbora.labs.pdn.thumbnail.actionSystem.ThumbnailViewActionUtil;
-import com.intellij.ide.IdeBundle;
 import com.intellij.ide.util.PropertiesComponent;
 import com.intellij.openapi.actionSystem.AnActionEvent;
 import com.intellij.openapi.actionSystem.ToggleAction;

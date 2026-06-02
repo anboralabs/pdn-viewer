@@ -15,9 +15,9 @@
  */
 package co.anbora.labs.pdn.actions;
 
+import co.anbora.labs.pdn.IdeBundle;
 import co.anbora.labs.pdn.options.DefaultImageEditorSettings;
 import co.anbora.labs.pdn.ui.ImageComponentDecorator;
-import com.intellij.ide.IdeBundle;
 import com.intellij.openapi.actionSystem.ActionUpdateThread;
 import com.intellij.openapi.actionSystem.AnActionEvent;
 import com.intellij.openapi.actionSystem.ToggleAction;

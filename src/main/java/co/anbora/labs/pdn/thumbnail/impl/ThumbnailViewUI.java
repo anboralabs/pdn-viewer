@@ -2,6 +2,7 @@
 // the Apache 2.0 license that can be found in the LICENSE file.
 package co.anbora.labs.pdn.thumbnail.impl;
 
+import co.anbora.labs.pdn.IdeBundle;
 import co.anbora.labs.pdn.ImagesBundle;
 import co.anbora.labs.pdn.fileTypes.ImageFileTypeManager;
 import co.anbora.labs.pdn.options.*;
@@ -20,7 +21,6 @@ import co.anbora.labs.pdn.vfs.IfsUtil;
 import com.intellij.ide.CopyPasteDelegator;
 import com.intellij.ide.CopyPasteSupport;
 import com.intellij.ide.DeleteProvider;
-import com.intellij.ide.IdeBundle;
 import com.intellij.ide.util.DeleteHandler;
 import com.intellij.ide.util.PropertiesComponent;
 import com.intellij.openapi.Disposable;

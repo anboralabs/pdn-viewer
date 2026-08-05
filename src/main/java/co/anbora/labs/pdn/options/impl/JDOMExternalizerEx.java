@@ -15,8 +15,8 @@
  */
 package co.anbora.labs.pdn.options.impl;
 
+import co.anbora.labs.pdn.utils.JdomKt;
 import com.intellij.openapi.util.JDOMExternalizer;
-import com.intellij.util.JdomKt;
 import org.jdom.Element;
 
 import java.awt.*;
